@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import re
 import sys
 
-VERSIONFILE = "src/pcars/_version.py"
+VERSIONFILE = "src/pcars2/_version.py"
 verstr = "unknown"
 try:
     verstrline = open(VERSIONFILE, "rt").read()
@@ -19,16 +19,16 @@ if sys.version_info < (3, 4):
     install_requires.append("enum34")
 
 setup(
-    name="pcars",
+    name="pcars2",
     version=verstr,
-    description="Project CARS UDP feed client",
-    author="James Muscat",
+    description="Project CARS V2 UDP feed client",
+    author="James Muscat, Jacek Kowalski",
     author_email="jamesremuscat@gmail.com",
-    url="https://github.com/jamesremuscat/pcars",
+    url="https://github.com/jkowa/pcars2",
     packages=find_packages("src", exclude=["*.tests"]),
     package_dir={"": "src"},
     long_description="""
-      pcars is a Python client for Project CARS's UDP data feed.
+      pcars2 is a Python client for Project CARS's V2 UDP data feed.
       """,
     setup_requires=["nose>=1.0"],
     tests_require=[],
