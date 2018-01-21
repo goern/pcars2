@@ -1,4 +1,4 @@
-from pcars.packet import Packet
+from pcars2.packet import Packet
 from io import BytesIO
 from threading import Thread
 import socket
