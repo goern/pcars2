@@ -18,10 +18,15 @@ class Packet(object):
 		self.buildVersion = buildVersion
 		self.sequenceNumber = sequenceNumber
 		self.packetType = packetType
+		self._data = {}
+		#packetType=1 breaks the code for some reason
 		if hasattr(self.__class__, "STRUCTURE"):
-			self._data = self.__class__.STRUCTURE.read_dict(buf)
-		else:
-			self._data = {}
+			try:
+				self._data = self.__class__.STRUCTURE.read_dict(buf)
+			except UnicodeDecodeError:
+				print("Could not decode packet: " + str(self.sequenceNumber) + ": " + str(PACKET_TYPES[self.packetType]))
+			except binio.EndOfFileError:
+				print("Error occured in packet " + str(self.sequenceNumber) + ": " + str(PACKET_TYPES[self.packetType]))
 
 	def _convertString(self, stringAsBytes):
 		# Convert to utf-8 and strip junk from strings after the null character.
@@ -42,8 +47,6 @@ class Packet(object):
 		sequenceNumber = header["mCategoryPacketNumber"]
 		packetType = header["mPacketType"]
 		pClass = PACKET_TYPES.get(packetType, Packet)
-		print(str(header["mPacketNumber"]) + ": " + str(packetType))
-		print(buf)
 		return pClass(buildVersion, sequenceNumber, packetType, buf)
 
 
