@@ -40,14 +40,14 @@ class Sector(Enum):
 
 
 class FlagColour(Enum):
-    NONE = 0           # Not used for actual flags, only for some query functions
-    GREEN = 1          # End of danger zone, or race started
-    BLUE = 2           # Faster car wants to overtake the participant
-    WHITE = 3          # Approaching a slow car
-    YELLOW = 4         # Danger on the racing surface itself
+    NONE = 0  # Not used for actual flags, only for some query functions
+    GREEN = 1  # End of danger zone, or race started
+    BLUE = 2  # Faster car wants to overtake the participant
+    WHITE = 3  # Approaching a slow car
+    YELLOW = 4  # Danger on the racing surface itself
     DOUBLE_YELLOW = 5  # Danger that wholly or partly blocks the racing surface
-    BLACK = 6          # Participant disqualified
-    CHEQUERED = 7      # Chequered flag
+    BLACK = 6  # Participant disqualified
+    CHEQUERED = 7  # Chequered flag
 
 
 class FlagReason(Enum):

@@ -5,8 +5,8 @@ import os
 
 _location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-class TestPacket(unittest.TestCase):
 
+class TestPacket(unittest.TestCase):
     def TestPacketType0(self):
         with open(os.path.join(_location, "packetbin_type_0.bin"), "rb") as f:
             p = Packet.readFrom(f)
@@ -17,8 +17,8 @@ class TestPacket(unittest.TestCase):
         with open(os.path.join(_location, "packetbin_type_3.bin"), "rb") as f:
             p = Packet.readFrom(f)
         self.assertEqual(3, p.packetType)
-        self.assertEqual(p['ParticipantsChangedTimestamp'], 373537025)
-        self.assertEqual(6.64613997892458e+35, p["participants_time_stats"][0]['sFastestLapTime'])
+        self.assertEqual(p["ParticipantsChangedTimestamp"], 373537025)
+        self.assertEqual(6.64613997892458e35, p["participants_time_stats"][0]["sFastestLapTime"])
 
     def testPacketType4(self):
         with open(os.path.join(_location, "packetbin_type_4.bin"), "rb") as f:
@@ -32,5 +32,6 @@ class TestPacket(unittest.TestCase):
         self.assertEqual(7, p.packetType)
         self.assertEqual(6.058903471481429e-39, p["sSplitTimeBehind"])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -26,11 +26,11 @@ class MyPCarsListener(object):
         # You probably want to do something more exciting here
         # You probably also want to switch on data.packetType
         # See listings in packet.py for packet types and available fields for each
-        print data
+        print(data)
 
 
 listener = MyPCarsListener()
 stream = PCarsStreamReceiver()
 stream.addListener(listener)
-stream.start()
+stream.run()
 ```
