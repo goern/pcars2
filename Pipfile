@@ -7,6 +7,7 @@ name = "pypi"
 binio = "*"
 thoth-common = "*"
 thoth-messaging = "*"
+click = "*"
 
 [dev-packages]
 bandit = "*"
