@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thoth-adviser
-# Copyright(C) 2021 Christoph Görn 
+# Copyright(C) 2021 Christoph Görn
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,31 +19,42 @@
 """."""
 
 import logging
-import os
 import json
-from runpy import run_module
-from time import sleep
 
 import click
 
+import paho.mqtt.client as mqtt
+
 from thoth.common import init_logging
 from pcars2.packet import Packet
-
 from pcars2.stream import PCarsStreamReceiver
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.0-dev"
+
 
 init_logging()
 
 _LOGGER = logging.getLogger("sms_udp2mqtt")
+
+
+mqttBroker = "mqtt.eclipseprojects.io"
+
+client = mqtt.Client("b4mad.sms_udp")
+client.connect(mqttBroker)
+
 
 class AMS2Listener(object):
     def handlePacket(self, data: Packet):
         _LOGGER.debug(json.dumps(data.__dict__))
 
         if data.packetType == 0:
-            _LOGGER.info(f"{data['sequenceNumber']}: speed={data['speed']}")
+            _LOGGER.info(f"TELEMETRY: seq={data.sequenceNumber}, speed={data['speed']}")
+        elif data.packetType == 3:
+            _LOGGER.info(f"TIMING: seq={data.sequenceNumber}, participants={data['NumParticipants']}")
+
+        client.publish("b4mad.sms_udp.ams2", json.dumps(data.__dict__))
+
 
 def _print_version(ctx: click.Context, _, value: str):
     """Print version and exit."""
@@ -52,7 +63,6 @@ def _print_version(ctx: click.Context, _, value: str):
 
     click.echo(__version__)
     ctx.exit()
-
 
 
 @click.command()
@@ -86,5 +96,6 @@ def cli(ctx=None, verbose=False):
     stream = PCarsStreamReceiver()
     stream.addListener(listener)
     stream.run()
+
 
 __name__ == "__main__" and cli()

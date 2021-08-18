@@ -8,9 +8,14 @@ binio = "*"
 thoth-common = "*"
 thoth-messaging = "*"
 click = "*"
+paho-mqtt = "*"
 
 [dev-packages]
 bandit = "*"
+black = "*"
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

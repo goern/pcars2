@@ -47,7 +47,7 @@ class Packet(object):
             convertedValue = str(stringAsBytes, encoding="utf-8", errors="surrogateescape")
         except TypeError:
             # FIXME(goern)
-            convertedValue = "" 
+            convertedValue = ""
 
         return convertedValue.rstrip("\x00")
 
@@ -347,7 +347,7 @@ class ParticipantsVehicleNamesData(Packet):
 
 class ParticipantVehicleNamesData(Packet):
 
-    VEHICLE_CLASS_INFO = binio.new([(1, binio.types.t_uint, "Index"), (20, binio.types.t_char, "Name")])
+    VEHICLE_CLASS_INFO = binio.new([(1, binio.types.t_u16, "Index"), (20, binio.types.t_char, "Name")])
 
     def __init__(self, buildVersion, sequenceNumber, packetType, buf):
         super(ParticipantVehicleNamesData, self).__init__(buildVersion, sequenceNumber, packetType, buf)
@@ -377,5 +377,5 @@ PACKET_TYPES = {
     3: TimingsData,
     4: GameStateData,
     7: TimeStatsData,
-    8: ParticipantVehicleNamesData,
+    #    8: ParticipantVehicleNamesData,  # TODO
 }
